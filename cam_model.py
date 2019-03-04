@@ -1,16 +1,6 @@
 import cv2
 import os
 import numpy as np
-from keras.models import Sequential
-from keras.layers.convolutional import Conv2D, MaxPooling2D
-from keras.layers import Activation, Dense, Flatten, Dropout
-from keras.preprocessing.image import ImageDataGenerator
-from keras.datasets import mnist
-from keras.optimizers import Adam
-from keras.layers.normalization import BatchNormalization
-from keras.utils import np_utils
-from random import sample
-from keras.models import model_from_json
 import psutil
 import easygui
 from tweet import post_picture
@@ -34,13 +24,17 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 cam = cv2.VideoCapture(0)    
 
 
-path = '/home/felipe/final'
+path = os.getcwd()
+
+bark_time = 0.45
+
+run_time = bark_time + 0.05
 
 wait = 0
-WAIT_TURNS = 240
+WAIT_TURNS = int(60.0 / run_time)
 
 SCORE_THRESHOLD = 0.90 # > 
-SOUND_THRESHOLD = 0
+SOUND_THRESHOLD = 0.90
 time_init = time()
 time_end = 0
 
@@ -54,7 +48,7 @@ command = "Init"
 
 pic_ok = "O"
 
-loop = 20
+loop = int(20. / run_time)
 
 while True:
 
@@ -65,7 +59,10 @@ while True:
     now = datetime.now()         
     time_taken = time() 
     
-    current_sound = bark(0.1)
+    current_sound = bark(bark_time)
+    
+    #current_sound = 0
+    
     
     dif = current_sound - old_sound
     
@@ -105,6 +102,10 @@ while True:
             if score > SCORE_THRESHOLD and wait == 0:
                 
                 cv2.imwrite(path+"/auto_tweet.png",img)
+                
+                pic_id = str(now.month) + str(now.day) + str(now.hour) +  str(now.minute) + str(now.second)
+         
+                print("Salvo em "+path+"/output/tiao"+str(pic_id)+".png")
                 cv2.imwrite(path+"/output/tiao"+str(pic_id)+".png", img)
                 
                 pic_ok = "X"
@@ -117,7 +118,7 @@ while True:
                     
                     if pic_enabled:
                         
-                        #post_picture(path+"/auto_tweet.png")
+                        post_picture(path+"/auto_tweet.png")
                         pass
                         
                 except:
