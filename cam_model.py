@@ -98,7 +98,11 @@ while True:
              
                   
         if now.hour < 20 and now.hour > 6:
-          
+        
+            f = open("report.txt", 'a')
+            f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
+            f.close()           
+            
             if score > SCORE_THRESHOLD and wait == 0:
                 
                 cv2.imwrite(path+"/auto_tweet.png",img)
@@ -130,13 +134,6 @@ while True:
     
         wait -= 1                        
                     
-                                        
-        f = open("report.txt", 'a')
-
-        f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
-
-        f.close()           
-
 
 
     command_delay = (command_delay + 1) % loop
