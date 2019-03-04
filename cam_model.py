@@ -94,7 +94,7 @@ while True:
       
         score = predict(img)    
     
-        print("W:", str(wait).zfill(2), "Score:", '{:04f}'.format(score), "Sound:", '{:04f}'.format(sound), "Time:", time_id)
+        print("Score:", '{:04f}'.format(score), "Sound:", '{:04f}'.format(sound))
              
                   
         if now.hour < 20 and now.hour > 6:
@@ -126,9 +126,9 @@ while True:
                     print("Corrigir")
                            
             
-        if wait > 0:
-        
-            wait -= 1                        
+    if wait > 0:
+    
+        wait -= 1                        
                     
                                         
         f = open("report.txt", 'a')
@@ -159,7 +159,7 @@ while True:
     time_end = time()  
      
        
-    print('{:04f}'.format(time_end - time_taken), "Segundos ", "Comando:", command, "-", command_delay, "Time:", time_id) 
+    print('{:04f}'.format(time_end - time_taken), "Sec", "Cmd:", command, "-", str(command_delay).zfill(2), "Time:", time_id, "W:", str(wait).zfill(3)) 
     
     f = open("last_run.txt","w")
     f.write(time_id+"\n")
