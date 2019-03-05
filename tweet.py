@@ -17,8 +17,9 @@ def post_picture(image_path):
 	auth.set_access_token(access_token, access_token_secret) 
 	api = tweepy.API(auth)
 	now = datetime.now() 
+	time_id = '{:02d}'.format(now.hour)+":"+'{:02d}'.format(now.minute)+":"+'{:02d}'.format(now.second)
 
-	tweet = "Olar ("+str(now.hour)+":"+str(now.minute)+":"+str(now.second)+")" # toDo 
+	tweet = "Olar ("+ time_id +")" # toDo 
 	#image_path ="path of the image" # toDo 
 
 	# update the status 
