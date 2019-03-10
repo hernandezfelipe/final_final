@@ -14,16 +14,18 @@ p.nice(19)  # set>>> p.nice()10
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
+path = "/home/felipe/final_final"
+
 from keras.models import load_model
 from keras.utils.generic_utils import CustomObjectScope
 
 with CustomObjectScope({'relu6': keras.applications.mobilenet.relu6,'DepthwiseConv2D': keras.applications.mobilenet.DepthwiseConv2D}):
 
-    json_file = open('model.json', 'r')
+    json_file = open(path+'/model.json', 'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
-    loaded_model.load_weights("model.h5")
+    loaded_model.load_weights(path+"/model.h5")
 
 def predict(img):
 

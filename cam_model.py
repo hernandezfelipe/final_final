@@ -24,7 +24,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 cam = cv2.VideoCapture(0)    
 
 
-path = os.getcwd()
+path = "/home/felipe/final_final"
 
 bark_time = 0.45
 
@@ -127,7 +127,7 @@ while True:
                     print("Corrigir")
                         
                         
-                f = open("report.txt", 'a')
+                f = open(path + "/report.txt", 'a')
                 f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
                 f.close()            
             
@@ -159,7 +159,7 @@ while True:
        
     print('{:04f}'.format(time_end - time_taken), "Sec", "Cmd:", command, "-", str(command_delay).zfill(2), "Time:", time_id, "W:", str(wait).zfill(3)) 
     
-    f = open("last_run.txt","w")
+    f = open(path + "/last_run.txt","w")
     f.write(time_id+"\n")
     f.close()
     
