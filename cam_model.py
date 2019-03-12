@@ -56,14 +56,20 @@ while True:
     
     pic_ok = "O"
             
-    now = datetime.now()         
+    now = datetime.now()    
+    
+    if now.hour < 18 and now.hour > 6:
+    
+        too_dark = False
+        
+    else:
+    
+        too_dark = True    
+             
     time_taken = time() 
     
     current_sound = bark(bark_time)
-    
-    #current_sound = 0
-    
-    
+      
     dif = current_sound - old_sound
     
     if dif >= 0:
@@ -95,41 +101,50 @@ while True:
         score = predict(img)    
     
         print("Score:", '{:04f}'.format(score), "Sound:", '{:04f}'.format(sound))
-             
-                  
-        if now.hour < 20 and now.hour > 6:
-        
- 
-            if score > SCORE_THRESHOLD and wait == 0:
-                
-                cv2.imwrite(path+"/auto_tweet.png",img)
-                
-                pic_id = str(now.month) + str(now.day) + str(now.hour) +  str(now.minute) + str(now.second)
-         
+    
+
+        if score > SCORE_THRESHOLD and wait == 0:
+            
+            cv2.imwrite(path+"/auto_tweet.png",img)
+            
+            pic_id = str(now.month) + str(now.day) + str(now.hour) +  str(now.minute) + str(now.second)
+     
+            if not too_dark:
+            
                 print("Salvo em "+path+"/output/tiao"+str(pic_id)+".png")
                 cv2.imwrite(path+"/output/tiao"+str(pic_id)+".png", img)
                 
-                pic_ok = "X"
+            else:
+            
+                print("Salvo em "+path+"/output/dark"+str(pic_id)+".png")
+                cv2.imwrite(path+"/output/dark"+str(pic_id)+".png", img)
+                
+            
+            pic_ok = "X"
 
-                wait = WAIT_TURNS
+            wait = WAIT_TURNS
+            
+            try:
+            
+                print("Postando foto")
                 
-                try:
+                if not too_dark:
                 
-                    print("Postando foto")
-                    
                     if pic_enabled:
                         
                         post_picture(path+"/auto_tweet.png")
-                        pass
                         
-                except:
-                
-                    print("Corrigir")
-                        
-                        
-                f = open(path + "/report.txt", 'a')
-                f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
-                f.close()            
+                    pass   
+                                   
+                    
+            except:
+            
+                print("Corrigir")
+                    
+                    
+            f = open(path + "/report.txt", 'a')
+            f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
+            f.close()            
             
     if wait > 0:
     
