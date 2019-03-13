@@ -142,11 +142,11 @@ while True:
             except:
             
                 print("Corrigir")
-                    
-                    
-            f = open(path + "/report.txt", 'a')
-            f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
-            f.close()            
+                
+                
+        f = open(path + "/report.txt", 'a')
+        f.write("W: "+ str(wait).zfill(2) + " " + str(time_id) + " S: " + '{:04f}'.format(score) + " V: " + '{:04f}'.format(sound) + " " + pic_ok + "\n")
+        f.close()            
             
     if wait > 0:
     
