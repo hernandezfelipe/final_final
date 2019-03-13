@@ -114,13 +114,15 @@ while True:
                 print("Salvo em "+path+"/output/tiao"+str(pic_id)+".png")
                 cv2.imwrite(path+"/output/tiao"+str(pic_id)+".png", img)
                 
+                pic_ok = "X"
+                
             else:
             
                 print("Salvo em "+path+"/output/dark"+str(pic_id)+".png")
                 cv2.imwrite(path+"/output/dark"+str(pic_id)+".png", img)
                 
+                pic_ok = "D"          
             
-            pic_ok = "X"
 
             wait = WAIT_TURNS
             
